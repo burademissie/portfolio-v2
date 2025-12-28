@@ -8,7 +8,6 @@ const navItems = [
   { name: "Experience", href: "#dsa-experience" },
   { name: "Projects", href: "#projects" },
   { name: "Skills", href: "#skills" },
-  { name: "Contact", href: "#contact" },
 ]
 
 export function Navigation() {

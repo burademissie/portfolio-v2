@@ -5,7 +5,6 @@ import { About } from "@/components/About"
 import { DSAExperience } from "@/components/DSAExperience"
 import { Projects } from "@/components/Projects"
 import { Skills } from "@/components/Skills"
-import { Contact } from "@/components/Contact"
 import { Footer } from "@/components/Footer"
 import { ScrollProgress } from "@/components/ScrollProgress"
 import { CursorSpotlight } from "@/components/CursorSpotlight"
@@ -29,7 +28,6 @@ function App() {
       <DSAExperience />
       <Projects />
       <Skills />
-      <Contact />
       <Footer />
       <BackToTop />
     </div>
