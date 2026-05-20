@@ -1,40 +1,75 @@
-import { Mail, MessageCircle } from "lucide-react"
+import { Github, Linkedin, Mail, Heart } from "lucide-react"
+import { useScrollReveal } from "@/hooks/useScrollReveal"
 
 export function Footer() {
   const currentYear = new Date().getFullYear()
+  const { ref, isVisible } = useScrollReveal(0.2)
+
+  const scrollToSection = (href: string) => {
+    const element = document.querySelector(href)
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" })
+    }
+  }
 
   return (
-    <footer className="border-t border-border/50 bg-background/50 backdrop-blur-sm">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex flex-col items-center justify-center gap-6">
+    <footer 
+      ref={ref}
+      className={`py-12 px-6 bg-foreground text-background transition-all duration-700 ${
+        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+      }`}
+    >
+      <div className="container mx-auto max-w-7xl">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+          
+
+          {/* Navigation */}
           <div className="flex items-center gap-6">
+            <button onClick={() => scrollToSection("#projects")} className="text-sm text-background/60 hover:text-background transition-colors">
+              Projects
+            </button>
+            <button onClick={() => scrollToSection("#about")} className="text-sm text-background/60 hover:text-background transition-colors">
+              About
+            </button>
+            <button onClick={() => scrollToSection("#contact")} className="text-sm text-background/60 hover:text-background transition-colors">
+              Contact
+            </button>
+          </div>
+
+          {/* Social Links */}
+          <div className="flex items-center gap-3">
             <a
-              href="mailto:birukdemissie23@gmail.com"
-              className="flex items-center gap-2 px-4 py-2 rounded-lg border border-border hover:border-primary hover:bg-primary/10 transition-all group text-muted-foreground hover:text-foreground"
-              aria-label="Email"
-            >
-              <Mail className="h-5 w-5 group-hover:scale-110 transition-transform" />
-              <span className="text-sm font-medium">Email</span>
-            </a>
-            <a
-              href="https://t.me/bdlb99"
+              href="https://github.com/burademissie/"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2 rounded-lg border border-border hover:border-primary hover:bg-primary/10 transition-all group text-muted-foreground hover:text-foreground"
-              aria-label="Telegram"
+              className="p-2.5 rounded-full bg-background/10 hover:bg-background/20 transition-colors"
             >
-              <MessageCircle className="h-5 w-5 group-hover:scale-110 transition-transform" />
-              <span className="text-sm font-medium">Telegram</span>
+              <Github className="h-4 w-4" />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/biruk-demissie-46a6ab350/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2.5 rounded-full bg-background/10 hover:bg-background/20 transition-colors"
+            >
+              <Linkedin className="h-4 w-4" />
+            </a>
+            <a
+              href="mailto:birukdemissie23@gmail.com"
+              className="p-2.5 rounded-full bg-background/10 hover:bg-background/20 transition-colors"
+            >
+              <Mail className="h-4 w-4" />
             </a>
           </div>
-          <div className="text-sm text-muted-foreground">
-            <span>© {currentYear} Bura_d. All rights reserved.</span>
-          </div>
+        </div>
+
+        {/* Copyright */}
+        <div className="mt-12 pt-8 border-t border-background/10 text-center">
+          <p className="text-sm text-background/60 flex items-center justify-center gap-1">
+            © {currentYear} Biruk Demissie.
+          </p>
         </div>
       </div>
     </footer>
   )
 }
-
-
-

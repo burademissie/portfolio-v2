@@ -1,35 +1,23 @@
-import { AnimatedGrid } from "@/components/AnimatedGrid"
 import { Navigation } from "@/components/Navigation"
 import { Hero } from "@/components/Hero"
-import { About } from "@/components/About"
-import { DSAExperience } from "@/components/DSAExperience"
 import { Projects } from "@/components/Projects"
-import { Skills } from "@/components/Skills"
+import { Experience } from "@/components/Experience"
+import { About } from "@/components/About"
 import { Footer } from "@/components/Footer"
-import { ScrollProgress } from "@/components/ScrollProgress"
-import { CursorSpotlight } from "@/components/CursorSpotlight"
-import { FloatingParticles } from "@/components/FloatingParticles"
-import { BackToTop } from "@/components/BackToTop"
-import { CustomCursor } from "@/components/CustomCursor"
 import { LoadingScreen } from "@/components/LoadingScreen"
+import { ScrollLines } from "@/components/ScrollLines"
 
 function App() {
   return (
-    <div className="dark min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background text-foreground relative">
       <LoadingScreen />
-      <CustomCursor />
-      <AnimatedGrid />
-      <FloatingParticles />
-      <CursorSpotlight />
-      <ScrollProgress />
+      <ScrollLines />
       <Navigation />
       <Hero />
-      <About />
-      <DSAExperience />
       <Projects />
-      <Skills />
+      <Experience />
+      <About />
       <Footer />
-      <BackToTop />
     </div>
   )
 }

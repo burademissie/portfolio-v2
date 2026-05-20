@@ -1,13 +1,12 @@
-import { Button } from "@/components/ui/button"
 import { Menu, X } from "lucide-react"
 import { useState, useEffect } from "react"
 
 const navItems = [
   { name: "Home", href: "#home" },
-  { name: "About", href: "#about" },
-  { name: "Experience", href: "#dsa-experience" },
   { name: "Projects", href: "#projects" },
-  { name: "Skills", href: "#skills" },
+  { name: "Experience", href: "#experience" },
+  { name: "About", href: "#about" },
+  { name: "Contact", href: "#contact" },
 ]
 
 export function Navigation() {
@@ -18,7 +17,8 @@ export function Navigation() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20)
     }
-    window.addEventListener("scroll", handleScroll)
+    window.addEventListener("scroll", handleScroll, { passive: true })
+    handleScroll()
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
@@ -34,28 +34,32 @@ export function Navigation() {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-background/80 backdrop-blur-md border-b border-border/50 shadow-lg"
+          ? "bg-background/80 backdrop-blur-lg shadow-sm"
           : "bg-transparent"
       }`}
     >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <div className="text-2xl font-bold bg-gradient-to-r from-primary via-purple-500 to-pink-500 bg-clip-text text-transparent">
-            Portfolio
-          </div>
+      <div className="container mx-auto px-6 lg:px-8">
+        <div className="flex items-center justify-between h-20">
+          {/* Logo */}
+          <button 
+            onClick={() => scrollToSection("#home")}
+            className="text-2xl font-extrabold"
+          >
+            <span className="gradient-text">BD</span>
+          </button>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-6">
+          <div className="hidden md:flex items-center gap-8">
             {navItems.map((item) => (
               <button
                 key={item.name}
                 onClick={() => scrollToSection(item.href)}
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors relative group"
+                className="text-sm font-medium text-muted-foreground hover:text-background hover:bg-foreground px-3 py-1.5 rounded-full transition-colors"
               >
                 {item.name}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-purple-500 group-hover:w-full transition-all duration-300" />
               </button>
             ))}
+            
           </div>
 
           {/* Mobile Menu Button */}
@@ -73,22 +77,27 @@ export function Navigation() {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden pb-4 space-y-2">
-            {navItems.map((item) => (
+          <div className="md:hidden py-6 border-t border-border bg-background">
+            <div className="space-y-1">
+              {navItems.map((item) => (
+                <button
+                  key={item.name}
+                  onClick={() => scrollToSection(item.href)}
+                  className="block w-full text-left px-4 py-3 text-muted-foreground hover:text-foreground hover:bg-secondary/50 rounded-lg transition-colors"
+                >
+                  {item.name}
+                </button>
+              ))}
               <button
-                key={item.name}
-                onClick={() => scrollToSection(item.href)}
-                className="block w-full text-left px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent rounded-md transition-colors"
+                onClick={() => scrollToSection("#contact")}
+                className="w-full mt-4 px-6 py-3 bg-foreground text-background rounded-full text-sm font-medium"
               >
-                {item.name}
+                Hire Me
               </button>
-            ))}
+            </div>
           </div>
         )}
       </div>
     </nav>
   )
 }
-
-
-

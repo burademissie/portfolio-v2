@@ -38,3 +38,5 @@ export function TypingAnimation({ text, speed = 100, className = "" }) {
 
 
 
+
+

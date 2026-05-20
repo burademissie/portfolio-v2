@@ -38,11 +38,11 @@ export function Skills() {
     <section
       ref={sectionRef}
       id="skills"
-      className={`min-h-screen py-20 px-4 sm:px-6 lg:px-8 transition-all duration-1000 ${
-        isSectionVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+      className={`min-h-screen w-screen flex-shrink-0 py-20 px-4 sm:px-6 lg:px-8 transition-all duration-1000 flex flex-col justify-center ${
+        isSectionVisible ? "opacity-100" : "opacity-100"
       }`}
     >
-      <div className="container mx-auto">
+      <div className="max-w-7xl mx-auto w-full">
         <div className="text-center mb-16">
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4">
             My <ShimmerText>Skills</ShimmerText>

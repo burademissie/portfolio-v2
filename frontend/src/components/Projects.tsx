@@ -1,178 +1,159 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { ExternalLink, Github } from "lucide-react"
-import { TechIcon } from "@/components/TechIcon"
-import { TiltCard } from "@/components/TiltCard"
-import { useScrollAnimation } from "@/hooks/useScrollAnimation"
-import { ShimmerText } from "@/components/ShimmerText"
-import { SectionDivider } from "@/components/SectionDivider"
-import { ProjectModal } from "@/components/ProjectModal"
-import { useState } from "react"
+import { ArrowUpRight } from "lucide-react"
+import { useScrollReveal } from "@/hooks/useScrollReveal"
 
 const projects = [
   {
-    title: "Geez language learning platform",
-    description: "An interactive platform designed to teach the ancient Geʽez language using modern learning tools. It connects Geʽez with Amharic and English through structured lessons, quizzes, and a trilingual dictionary. The platform helps preserve Ethiopia’s linguistic heritage while making Geʽez accessible to everyone.",
-    technologies: ["Vite", "Node.js", "PostgreSQL" , "Prisma"],
+    id: 1,
+    title: "Geez Learning Platform",
+    subtitle: "Language Education",
+    description: "An interactive platform teaching the ancient Geʽez language through modern learning tools. Features structured lessons, quizzes, and a trilingual dictionary connecting Geʽez with Amharic and English.",
+    technologies: ["React", "Node.js", "PostgreSQL", "Prisma"],
+    live: "https://ethiogeez.com",
     image: "/projects/geez.png",
-    github: "https://github.com",
-    live: "https://geez-phi.vercel.app/",
-    overview: "An interactive Geʽez language learning platform built with modern web technologies, designed to make learning the ancient language accessible through structured lessons, quizzes, and a trilingual dictionary.",
-    features: [
-      "User authentication and progress tracking",
-      "Structured Geʽez lessons and chapters",
-      "Chapter-based quizzes and knowledge assessment",
-      "Geʽez–Amharic–English trilingual dictionary",
-      "User performance tracking and streaks",
-      "Responsive and user-friendly interface"
-    ],
-    challenges: "Designing an effective learning flow for an ancient language while keeping the experience engaging was challenging. I addressed this by structuring lessons progressively and integrating interactive quizzes with instant feedback.",
-    role: "Full-stack developer responsible for UI/UX design, backend development, database modeling, and learning system logic."
+    color: "#FF6B35",
   },
-  
+  {
+    id: 2,
+    title: "Football Betting Intelligence",
+    subtitle: "Sports Analytics",
+    description: "A sophisticated sports analytics platform providing intelligent insights for football betting with real-time data analysis, match predictions, and comprehensive statistics.",
+    technologies: ["Next.js", "TypeScript", "Tailwind", "API"],
+    live: "https://football-eta-two.vercel.app/",
+    image: "/betting.png",
+    color: "#10B981",
+  },
+  {
+    id: 3,
+    title: "MedFind",
+    subtitle: "Healthcare App",
+    description: "Healthcare application helping users locate nearby pharmacies and medical facilities. Search medications, compare prices, and find stores with available stock.",
+    technologies: ["React", "Maps API", "Node.js", "MongoDB"],
+    live: "https://med-find-tau.vercel.app/",
+    image: "/medfind.png",
+    color: "#7C3AED",
+  },
 ]
 
-export function Projects() {
-  const [sectionRef, isSectionVisible] = useScrollAnimation({ threshold: 0.1 })
-  const [selectedProject, setSelectedProject] = useState(null)
-  const [isModalOpen, setIsModalOpen] = useState(false)
-
-  const handleProjectClick = (project) => {
-    setSelectedProject(project)
-    setIsModalOpen(true)
-  }
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false)
-    setTimeout(() => setSelectedProject(null), 300)
-  }
-
+function ProjectCard({ project, index }: { project: typeof projects[0], index: number }) {
+  const { ref, isVisible } = useScrollReveal(0.2)
+  
   return (
-    <section
-      ref={sectionRef}
-      id="projects"
-      className={`relative min-h-screen py-20 px-4 sm:px-6 lg:px-8 transition-all duration-1000 ${
-        isSectionVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+    <a
+      ref={ref}
+      href={project.live}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`project-card group block transition-all duration-700 ${
+        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16'
       }`}
+      style={{ transitionDelay: `${index * 0.15}s` }}
     >
-      <SectionDivider variant="wave" />
-      
-      <div className="container mx-auto relative z-10">
-        <div className="mb-16">
-          <div className="inline-block mb-4">
-            <span className="text-sm font-mono text-primary mb-2 block">02. Projects</span>
-            <h2 className="text-5xl sm:text-6xl md:text-7xl font-black mb-6 leading-tight">
-              My <ShimmerText>Projects</ShimmerText>
-            </h2>
-          </div>
-          <p className="text-lg text-muted-foreground max-w-2xl">
-            A collection of projects showcasing innovation, creativity, and technical expertise
-          </p>
+      <div className={`grid lg:grid-cols-2 gap-0 ${index % 2 === 1 ? 'lg:grid-flow-dense' : ''}`}>
+        {/* Image Section */}
+        <div 
+          className={`relative aspect-[4/3] lg:aspect-auto lg:min-h-[400px] overflow-hidden ${index % 2 === 1 ? 'lg:col-start-2' : ''}`}
+          style={{ backgroundColor: `${project.color}15` }}
+        >
+          <img
+            src={project.image}
+            alt={project.title}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+            onError={(e) => {
+              e.currentTarget.style.display = 'none'
+              const parent = e.currentTarget.parentElement
+              if (parent) {
+                parent.innerHTML = `
+                  <div class="w-full h-full flex items-center justify-center" style="background: linear-gradient(135deg, ${project.color}20 0%, ${project.color}05 100%)">
+                    <div class="text-center p-8">
+                      <div class="text-7xl mb-4">${project.id === 1 ? '📚' : project.id === 2 ? '⚽' : '💊'}</div>
+                      <p class="text-muted-foreground">Preview</p>
+                    </div>
+                  </div>
+                `
+              }
+            }}
+          />
+          
+          {/* Hover overlay */}
+          <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/5 transition-colors duration-300" />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.map((project, index) => (
-            <TiltCard key={index} intensity={10}>
-              <Card
-                onClick={() => handleProjectClick(project)}
-                className="group relative overflow-hidden glass-card border-primary/30 hover:border-primary transition-all duration-300 hover:shadow-xl hover:shadow-primary/30 cursor-pointer"
+        {/* Content Section */}
+        <div className={`p-8 lg:p-12 flex flex-col justify-center ${index % 2 === 1 ? 'lg:col-start-1 lg:row-start-1' : ''}`}>
+          <div className="flex items-center gap-3 mb-4">
+            <span 
+              className="px-3 py-1 rounded-full text-sm font-medium"
+              style={{ backgroundColor: `${project.color}15`, color: project.color }}
+            >
+              {project.subtitle}
+            </span>
+            <span className="text-muted-foreground text-sm">0{project.id}</span>
+          </div>
+          
+          <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 group-hover:text-primary transition-colors">
+            {project.title}
+          </h3>
+          
+          <p className="text-muted-foreground mb-6 leading-relaxed">
+            {project.description}
+          </p>
+          
+          {/* Tech stack */}
+          <div className="flex flex-wrap gap-2 mb-8">
+            {project.technologies.map((tech) => (
+              <span
+                key={tech}
+                className="px-3 py-1.5 bg-[#f5f5f4] rounded-lg text-sm text-muted-foreground"
               >
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-accent to-primary opacity-0 group-hover:opacity-100 transition-opacity z-10" />
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/0 via-accent/0 to-primary/0 group-hover:from-primary/10 group-hover:via-accent/10 group-hover:to-primary/10 transition-all duration-500 pointer-events-none" />
-                
-                {/* Project Landing Page Image */}
-                <div className="relative w-full h-48 overflow-hidden bg-gradient-to-br from-primary/10 via-accent/10 to-primary/10">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                    onError={(e) => {
-                      // Fallback to gradient placeholder if image not found
-                      e.target.style.display = 'none'
-                      const parent = e.target.parentElement
-                      parent.innerHTML = `
-                        <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/20 via-accent/20 to-primary/20">
-                          <div class="text-center p-4">
-                            <div class="text-4xl mb-2">${project.title === 'E-Commerce Platform' ? '🛒' : project.title === 'Task Management App' ? '📋' : project.title === 'Social Media Dashboard' ? '📊' : project.title === 'Weather Forecast App' ? '🌤️' : project.title === 'Music Player' ? '🎵' : '💼'}</div>
-                            <p class="text-xs text-muted-foreground">Add screenshot</p>
-                            <p class="text-xs text-muted-foreground/70">${project.image}</p>
-                          </div>
-                        </div>
-                      `
-                    }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent opacity-60" />
-                </div>
-                
-                <CardHeader>
-                  <CardTitle className="group-hover:text-primary transition-colors text-xl font-bold mt-4">
-                    {project.title}
-                  </CardTitle>
-                  <CardDescription className="line-clamp-2 text-sm">
-                    {project.description}
-                  </CardDescription>
-                </CardHeader>
-
-              <CardContent className="space-y-4">
-                <div className="flex flex-wrap gap-2">
-                  {project.technologies.map((tech, techIndex) => (
-                    <Badge
-                      key={techIndex}
-                      variant="secondary"
-                      className="bg-primary/10 border border-primary/30 text-primary hover:bg-primary/20 hover:border-primary transition-colors flex items-center gap-1.5"
-                    >
-                      <TechIcon name={tech} className="h-3.5 w-3.5" />
-                      <span>{tech}</span>
-                    </Badge>
-                  ))}
-                </div>
-
-                <div className="flex gap-2 pt-2">
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    className="flex-1 group/btn border-primary/30 hover:bg-primary/10 hover:border-primary"
-                    asChild
-                  >
-                    <a
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <Github className="mr-2 h-4 w-4 group-hover/btn:scale-110 transition-transform" />
-                      Code
-                    </a>
-                  </Button>
-                  <Button
-                    size="sm"
-                    className="flex-1 group/btn bg-gradient-to-r from-primary to-accent hover:from-accent hover:to-primary"
-                    asChild
-                  >
-                    <a
-                      href={project.live}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <ExternalLink className="mr-2 h-4 w-4 group-hover/btn:scale-110 transition-transform" />
-                      Live
-                    </a>
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-            </TiltCard>
-          ))}
+                {tech}
+              </span>
+            ))}
+          </div>
+          
+          {/* Link */}
+          <div className="flex items-center gap-2 text-foreground font-medium group-hover:text-primary transition-colors">
+            <span>View Project</span>
+            <ArrowUpRight className="h-5 w-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+          </div>
         </div>
       </div>
-
-      {/* Project Modal */}
-      <ProjectModal
-        project={selectedProject}
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-      />
-    </section>
+    </a>
   )
 }
 
+export function Projects() {
+  const { ref: headerRef, isVisible: headerVisible } = useScrollReveal(0.2)
+
+  return (
+    <section id="projects" className="section-padding bg-[#f5f5f4]">
+      <div className="container mx-auto px-6 lg:px-8 max-w-7xl">
+        {/* Header */}
+        <div 
+          ref={headerRef}
+          className={`flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16 transition-all duration-700 ${
+            headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+          }`}
+        >
+          <div>
+            <p className="text-primary font-medium mb-2">Portfolio</p>
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold">
+              Featured
+              <br />
+              <span className="creative-underline">Projects</span>
+            </h2>
+          </div>
+          <p className="text-muted-foreground max-w-md text-lg">
+            A showcase of applications I've built, each solving unique problems with creative solutions.
+          </p>
+        </div>
+
+        {/* Projects Grid - Creative Layout */}
+        <div className="space-y-8">
+          {projects.map((project, index) => (
+            <ProjectCard key={project.id} project={project} index={index} />
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
