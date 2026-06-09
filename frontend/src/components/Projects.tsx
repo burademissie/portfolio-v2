@@ -33,7 +33,7 @@ const projects = [
     color: "#7C3AED",
   },
   {
-    id: 1,
+    id: 4,
     title: "Agri Market with AI support",
     subtitle: "Agriculture and market connector app",
     description: "An interactive platform (website + Mobile app) that helps farmers what to crop in the time they wanted using dedicated AI support system based on the soil type and chemistry of their farm land. This system also helps farmers to post their products and contact with the real traders avoiding the middle man.This system helps farmers using local language ( text + voice ).",
