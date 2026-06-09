@@ -32,6 +32,16 @@ const projects = [
     image: "/medfind.png",
     color: "#7C3AED",
   },
+  {
+    id: 1,
+    title: "Agri Market with AI support",
+    subtitle: "Agriculture and market connector app",
+    description: "An interactive platform (website + Mobile app) that helps farmers what to crop in the time they wanted using dedicated AI support system based on the soil type and chemistry of their farm land. This system also helps farmers to post their products and contact with the real traders avoiding the middle man.This system helps farmers using local language ( text + voice ).",
+    technologies: ["React", "Express.js", "PostgreSQL", "Prisma" , "shadcn/ui" , "Neon" , "vercel" , "JWT" , "Flutter" , "Xgboost", "Gemini"],
+    live: "https://agri-market-omega.vercel.app/",
+    image: "/projects/agrimarket.jpg",
+    color: "#0F6B35",
+  },
 ]
 
 function ProjectCard({ project, index }: { project: typeof projects[0], index: number }) {
